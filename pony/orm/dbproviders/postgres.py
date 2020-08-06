@@ -6,10 +6,10 @@ from datetime import datetime, date, time, timedelta
 from uuid import UUID
 
 try:
-    import psycopg2
+    import psycopg2  # type: ignore
 except ImportError:
     try:
-        from psycopg2cffi import compat
+        from psycopg2cffi import compat  # type: ignore
     except ImportError:
         raise ImportError('In order to use PonyORM with PostgreSQL please install psycopg2 or psycopg2cffi')
     else:
@@ -17,7 +17,7 @@ except ImportError:
 
 from psycopg2 import extensions
 
-import psycopg2.extras
+import psycopg2.extras  # type: ignore
 psycopg2.extras.register_uuid()
 
 psycopg2.extras.register_default_json(loads=lambda x: x)
@@ -44,7 +44,7 @@ class PGTranslator(SQLTranslator):
     dialect = 'PostgreSQL'
 
 class PGValue(Value):
-    __slots__ = []
+    __slots__ = []  # type: ignore
     def __unicode__(self):
         value = self.value
         if isinstance(value, bool):

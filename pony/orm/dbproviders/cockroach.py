@@ -6,10 +6,10 @@ from datetime import datetime, date, time, timedelta
 from uuid import UUID
 
 try:
-    import psycopg2
+    import psycopg2  # type: ignore
 except ImportError:
     try:
-        from psycopg2cffi import compat
+        from psycopg2cffi import compat  # type: ignore
     except ImportError:
         raise ImportError('In order to use PonyORM with CockroachDB please install psycopg2 or psycopg2cffi')
     else:

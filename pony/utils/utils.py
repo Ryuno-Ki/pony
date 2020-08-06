@@ -120,7 +120,7 @@ def get_codeobject_id(codeobject):
         codeobjects[codeobject_id] = codeobject
     return codeobject_id
 
-lambda_args_cache = {}
+lambda_args_cache = {}  # type: ignore
 
 def get_lambda_args(func):
     if type(func) is types.FunctionType:

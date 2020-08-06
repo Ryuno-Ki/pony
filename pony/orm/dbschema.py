@@ -405,7 +405,7 @@ class ForeignKey(Constraint):
             append(case('ON DELETE %s' % foreign_key.on_delete))
         return ' '.join(cmd)
 
-DBSchema.table_class = Table
-DBSchema.column_class = Column
-DBSchema.index_class = DBIndex
-DBSchema.fk_class = ForeignKey
+DBSchema.table_class = Table  # type: ignore
+DBSchema.column_class = Column  # type: ignore
+DBSchema.index_class = DBIndex  # type: ignore
+DBSchema.fk_class = ForeignKey  # type: ignore

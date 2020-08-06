@@ -6,14 +6,14 @@ from os.path import dirname
 __version__ = '0.7.15-dev'
 
 def detect_mode():
-    try: import google.appengine
+    try: import google.appengine  # type: ignore
     except ImportError: pass
     else:
         if os.getenv('SERVER_SOFTWARE', '').startswith('Development'):
             return 'GAE-LOCAL'
         return 'GAE-SERVER'
 
-    try: from mod_wsgi import version
+    try: from mod_wsgi import version  # type: ignore
     except: pass
     else: return 'MOD_WSGI'
 
@@ -47,6 +47,6 @@ elif MODE != 'INTERACTIVE':
     MAIN_FILE = sys.modules['__main__'].__file__
 
 if MAIN_FILE is not None: MAIN_DIR = dirname(MAIN_FILE)
-else: MAIN_DIR = None
+else: MAIN_DIR = None  # type: ignore
 
 PONY_DIR = dirname(__file__)

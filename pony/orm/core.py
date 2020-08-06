@@ -1,6 +1,21 @@
 from __future__ import absolute_import, print_function, division
-from pony.py23compat import PY2, izip, imap, iteritems, itervalues, items_list, values_list, xrange, cmp, \
-                            basestring, unicode, buffer, int_types, builtins, with_metaclass
+from pony.py23compat import (  # type: ignore
+    PY2,
+    izip,
+    imap,
+    iteritems,
+    itervalues,
+    items_list,
+    values_list,
+    xrange,
+    cmp,
+    basestring,
+    unicode,
+    buffer,
+    int_types,
+    builtins,
+    with_metaclass
+)
 
 import json, re, sys, types, datetime, logging, itertools, warnings, inspect
 from operator import attrgetter, itemgetter
@@ -8,7 +23,12 @@ from itertools import chain, starmap, repeat
 from time import time
 from decimal import Decimal
 from random import shuffle, randint, random
-from threading import Lock, RLock, currentThread as current_thread, _MainThread
+from threading import (  # type: ignore
+    Lock,
+    RLock,
+    currentThread as current_thread,
+    _MainThread
+)
 from contextlib import contextmanager
 from collections import defaultdict
 from hashlib import md5
@@ -130,8 +150,8 @@ def args2str(args):
     elif isinstance(args, dict):
         return '{%s}' % ', '.join('%s:%s' % (repr(key), repr(val)) for key, val in sorted(iteritems(args)))
 
-adapted_sql_cache = {}
-string2ast_cache = {}
+adapted_sql_cache = {}  # type: ignore
+string2ast_cache = {}  # type: ignore
 
 class OrmError(Exception): pass
 
@@ -321,7 +341,7 @@ class PrefetchContext(object):
         return result
 
 
-class Local(localbase):
+class Local(localbase):  # type: ignore
     def __init__(local):
         local.debug = False
         local.show_values = None
@@ -1692,7 +1712,7 @@ def obj_labels_getter(cls=None):
         return func
     return decorator
 
-class DbLocal(localbase):
+class DbLocal(localbase):  # type: ignore
     def __init__(dblocal):
         dblocal.stats = {None: QueryStat(None)}
         dblocal.last_sql = None
@@ -2536,10 +2556,10 @@ class Attribute(object):
         return "%s = %s" % (attr.name, result)
 
 class Optional(Attribute):
-    __slots__ = []
+    __slots__ = []  # type: ignore
 
 class Required(Attribute):
-    __slots__ = []
+    __slots__ = []  # type: ignore
     def validate(attr, val, obj=None, entity=None, from_db=False):
         val = Attribute.validate(attr, val, obj, entity, from_db)
         if val == '' or (val is None and not (attr.auto or attr.is_volatile or attr.sql_default)):
@@ -2671,7 +2691,7 @@ def composite_key(*attrs):
     _define_index('composite_key', attrs, is_unique=True)
 
 class PrimaryKey(Required):
-    __slots__ = []
+    __slots__ = []  # type: ignore
     def __new__(cls, *args, **kwargs):
         if not args: throw(TypeError, 'PrimaryKey must receive at least one positional argument')
         cls_dict = sys._getframe(1).f_locals
@@ -2807,7 +2827,7 @@ def construct_batchload_criteria_list(alias, columns, converters, batch_size, ro
         return [ [ 'OR' ] + conditions ]
 
 class Set(Collection):
-    __slots__ = []
+    __slots__ = []  # type: ignore
     def validate(attr, val, obj=None, entity=None, from_db=False):
         val = deref_proxy(val)
         assert val is not NOT_LOADED
@@ -4683,7 +4703,7 @@ class EntityProxy(object):
         return not self.__eq__(other)
 
 
-class Entity(with_metaclass(EntityMeta)):
+class Entity(with_metaclass(EntityMeta)):  # type: ignore
     __slots__ = '_session_cache_', '_status_', '_pkval_', '_newid_', '_dbvals_', '_vals_', '_rbits_', '_wbits_', '_save_pos_', '__weakref__'
     def __reduce__(obj):
         if obj._status_ in del_statuses: throw(
